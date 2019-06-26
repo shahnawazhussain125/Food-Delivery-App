@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Search from './search';
 import SearchItems from './searchItems';
-
+import GoogleMap from './location';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +29,19 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     maxWidth: '100%',
     maxHeight: '100%',
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
+  details: {
+    alignItems: 'center',
+  },
+  column: {
+    flexBasis: '100%',
   },
 }));
 
@@ -65,6 +78,7 @@ export default function SimpleTabs() {
       {value === 0 
         && 
         <TabContainer>
+            <GoogleMap classes={classes}/>
             <Search classes={classes}/>
             <SearchItems classes={classes}/>
             <SearchItems classes={classes}/>
