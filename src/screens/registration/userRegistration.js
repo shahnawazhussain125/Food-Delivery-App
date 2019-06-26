@@ -4,6 +4,7 @@ import { Grid, Paper, TextField, MenuItem, Button } from '@material-ui/core';
 import { country_list } from '../../assests/static/contriesList';
 import { userRegistration } from '../../redux/actions/authAction';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -51,8 +52,21 @@ class RegistrationForm extends Component
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.signUpError)
+  componentDidMount(){
+    const { userData, history} = this.props;
+    if(userData)
+    {
+      history.push(`/${userData.userType}`)
+    }
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.signUpError)
+    {
+      this.props.history.push(`/${nextProps.userData.userType}`);
+    }
+    else
     {
       this.setState({signUpError: nextProps.signUpError})
     }
@@ -206,6 +220,7 @@ class RegistrationForm extends Component
                   variant="outlined"
                 />
                  
+                <p><Link to = "/signin" >Already have an account?</Link></p>
 
                 <Button 
                   variant="contained"  
@@ -226,6 +241,7 @@ class RegistrationForm extends Component
 const mapStateToProps = (state) =>{
   return({
     signUpError: state.authReducer.signUpError,
+    userData: state.authReducer.userData
   })
 }
 

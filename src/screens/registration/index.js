@@ -22,10 +22,10 @@ const useStyles = makeStyles(theme =>({
       color: 'red',
       backgroundColor: "green !important"
     },
-    link: {
-        color: "white !important",
-        textDecoration: "none"
-      },
+    // link: {
+    //     color: "white !important",
+    //     textDecoration: "none"
+    //   },
   }));
 
 
@@ -62,7 +62,6 @@ class RegistrationForm extends Component
   render(){
 
     const { classes }  = this.props;
-    // const { fullName, email, gender, age, country, city, password, confirmPassword  } = this.state;
     return(
       <Grid container className={classes.root}>
           <Paper className={classes.paper}>

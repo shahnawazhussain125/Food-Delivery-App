@@ -5,7 +5,7 @@ import { country_list } from '../../assests/static/contriesList';
 import { connect } from 'react-redux';
 import { restaurantRegistration } from '../../redux/actions/authAction';
 import firebase from '../../config/firebase';
-
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -56,6 +56,27 @@ class UserRegistrationForm extends Component
   }
 
 
+  componentDidMount(){
+    const { userData, history} = this.props;
+    if(userData)
+    {
+      history.push(`/${userData.userType}`)
+    }
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.signUpError)
+    {
+      this.props.history.push(`/${nextProps.userData.userType}`);
+    }
+    else
+    {
+      this.setState({signUpError: nextProps.signUpError})
+    }
+  }
+
+
   handleChange = name => event =>{
     this.setState({[name]: event.target.value});
   }
@@ -77,10 +98,10 @@ class UserRegistrationForm extends Component
 
   validateRestaurantEvent = () =>{
     const { restaurantName } = this.state;
-    firebase.firestore().collection("users").where("restaurantName", "==" , restaurantName)
+    firebase.firestore().collection("users").where("restaurantName", "==" , restaurantName.toLowerCase())
     .get()
     .then((shapshort)=>{
-      this.setState({restaurantNameError: shapshort.size > 0 ? "Restaurant is alrady register. Try with other name" : ""})
+      this.setState({restaurantNameError: shapshort.size > 0 ? "Restaurant Name is alrady register. Try with other name" : ""})
     })
   }
 
@@ -209,6 +230,7 @@ class UserRegistrationForm extends Component
                   variant="outlined"
                 />
                  
+                <p><Link to = "/signin" >Already have an account?</Link></p>
 
                 <Button 
                   variant="contained"  

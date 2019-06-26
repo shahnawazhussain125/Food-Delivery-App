@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
-import Registration from './screens/registration/userRegistration';
-import Login from './screens/login';
-import UserDashboard from './screens/user/dashboard';
+// import Footer from './components/Footer'
 import Routes from './routes';
 
 class App extends Component {
@@ -11,6 +9,7 @@ class App extends Component {
       <div>
         <Header/>
         <Routes/>
+        {/* <Footer/> */}
       </div>
     )
   }

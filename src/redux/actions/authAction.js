@@ -9,7 +9,9 @@ export const restaurantRegistration = (userData) =>{
                 .then(()=>{
                     imgRef.getDownloadURL()
                     .then(imgURL=>{
-                        firebase.firestore().collection('users').add({
+                        firebase.firestore().collection('users')
+                        .doc(response.user.uid)
+                        .set({
                             fullName: userData.fullName,
                             email: userData.email,
                             restaurantName: userData.restaurantName,
@@ -20,8 +22,15 @@ export const restaurantRegistration = (userData) =>{
                             certificateURL: imgURL,
                         })
                         .then((resp) =>{
-                            console.log("Response", resp.data());
-                            dispatch({type: "SIGNUP_SUCCESS", user: response.user, name: userData.name, userType: "user"})
+                            dispatch({
+                                type: "SIGNUP_SUCCESS", 
+                                user: response.user, 
+                                userData:{ 
+                                    ...userData, 
+                                    uid: response.user.uid, 
+                                    userType: "restaurant"
+                                }
+                            })
                         })
                         .catch((error) =>{
                             dispatch({ type: "SIGNUP_ERROR", signUpError: error.message})

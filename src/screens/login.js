@@ -3,6 +3,7 @@ import { makeStyles  } from '@material-ui/styles';
 import { Grid, Paper, TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux'
 import { signIn } from '../redux/actions/authAction';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -42,11 +43,23 @@ class LoginForm extends Component
   }
 
   componentDidMount(){
-    console.log("componentDidMount", this.props)
+    const { userData, history} = this.props;
+    if(userData)
+    {
+      history.push(`/${userData.userType}`)
+    }
+
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({errorMessage: nextProps.signInError})
+    if(!nextProps.signInError)
+    {
+      this.props.history.push(`/${nextProps.userData.userType}`);
+    }
+    else
+    {
+      this.setState({errorMessage: nextProps.signInError})
+    }
   }
 
   handleSubmit = () =>{
@@ -91,7 +104,9 @@ class LoginForm extends Component
                 margin="normal"
                 variant="outlined"
             />
-            
+
+            <p>Not a member yet? <Link to="/registration"> Sign Up here</Link> </p>
+
             <Button 
               variant="contained"  
               color="primary" 
@@ -111,7 +126,8 @@ class LoginForm extends Component
 const mapStateToProps = (state) =>{
   return({
     signInError: state.authReducer.signInError,
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    userData: state.authReducer.userData
   })
 }
 

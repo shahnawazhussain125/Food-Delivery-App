@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Search from './search';
 import SearchItems from './searchItems';
 import GoogleMap from './location';
+import ChipsArray from './chips';
+import MyRequest from "./myRequest"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,11 +82,18 @@ export default function SimpleTabs() {
         <TabContainer>
             <GoogleMap classes={classes}/>
             <Search classes={classes}/>
+            <ChipsArray/>
             <SearchItems classes={classes}/>
             <SearchItems classes={classes}/>
             <SearchItems classes={classes}/>
         </TabContainer>}
-      {value === 1 && <TabContainer>Item Two</TabContainer>}
+      {
+        value === 1
+        && 
+        <TabContainer>
+          <MyRequest classes={classes}/>
+        </TabContainer>
+      }
     </div>
   );
 }
