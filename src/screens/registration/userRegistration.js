@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { makeStyles  } from '@material-ui/styles';
 import { Grid, Paper, TextField, MenuItem, Button } from '@material-ui/core';
 import { country_list } from '../../assests/static/contriesList';
+import Loading from '../../components/loading';
 import { userRegistration } from '../../redux/actions/authAction';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -48,7 +49,9 @@ class RegistrationForm extends Component
       city: "",
       password: "",
       confirmPassword: "",
-      signUpError: ""
+      signUpError: "",
+      passwordError: "",
+      isLoading: false
     }
   }
 
@@ -64,19 +67,30 @@ class RegistrationForm extends Component
   componentWillReceiveProps(nextProps){
     if(!nextProps.signUpError)
     {
+      this.setState({isLoading: false})
       this.props.history.push(`/${nextProps.userData.userType}`);
     }
     else
     {
-      this.setState({signUpError: nextProps.signUpError})
+      this.setState({signUpError: nextProps.signUpError, isLoading: false})
     }
   }
 
   handleSubmit = () =>{
     const { fullName, email, gender, age, country, city, password, confirmPassword} = this.state;
-    if(password === confirmPassword)
+    
+    if(password.length < 6)
     {
-      this.props.userRegistration({fullName, email, gender, age, country, city, password});
+      this.setState({passwordError: "Password must contain 6 character", isLoading: false});
+    }
+    else if(password !== confirmPassword)
+    {
+      this.setState({passwordError: "Password does not match!", isLoading: false});      
+    }
+    else
+    {
+      this.setState({isLoading: true})
+      this.props.userRegistration({fullName, email, gender, age, country, city, password});     
     }
   }
 
@@ -84,14 +98,38 @@ class RegistrationForm extends Component
     this.setState({[name]: event.target.value});
   }
 
+  passwordValidation = () =>{
+    const { password, confirmPassword } = this.state;
+    if(password.length < 6)
+    {
+      this.setState({passwordError: "Password must contain 6 character"});
+    }
+    else if(password !== confirmPassword)
+    {
+      this.setState({passwordError: "Password does not match!"});      
+    }
+    else
+    {
+      this.setState({passwordError: ""});      
+    }
+  }
+
   render(){
 
     const { classes }  = this.props;
-    const { fullName, email, gender, age, country, city, password, confirmPassword , signUpError } = this.state;
+    const { isLoading, fullName, email, gender, age, country, city, password, confirmPassword , signUpError } = this.state;
     return(
       <Grid container className={classes.root}>
+          {
+            isLoading && <Loading/>
+          }
           <Paper className={classes.paper}>
-            <form className={classes.container} noValidate autoComplete="off">
+            <form 
+              className={classes.container} 
+              action="javascript:void(0)"  
+              onSubmit={this.handleSubmit}
+              autoComplete="on"
+            >
               <p style={{color: "red"}}>{signUpError}</p>
               <TextField
                 id="outlined-name"
@@ -102,6 +140,7 @@ class RegistrationForm extends Component
                 onChange={this.handleChange('fullName')}
                 margin="normal"
                 variant="outlined"
+                required
               />
                <TextField
                 id="outlined-email"
@@ -113,6 +152,7 @@ class RegistrationForm extends Component
                 onChange={this.handleChange('email')}
                 margin="normal"
                 variant="outlined"
+                required
               />
               <TextField
                 id="outlined-gender"
@@ -129,6 +169,7 @@ class RegistrationForm extends Component
                 }}
                 margin="normal"
                 variant="outlined"
+                required
               >
                 {["Male", "Female"].map(value => (
                   <MenuItem key={value} value={value}>
@@ -149,6 +190,7 @@ class RegistrationForm extends Component
                   }}
                   margin="normal"
                   variant="outlined"
+                  required
                 />
 
                 <TextField
@@ -166,6 +208,7 @@ class RegistrationForm extends Component
                   }}
                   margin="normal"
                   variant="outlined"
+                  required
                 >
                   {Object.keys(country_list).map(value => (
                     <MenuItem key={value} value={value}>
@@ -207,6 +250,7 @@ class RegistrationForm extends Component
                   onChange={this.handleChange('password')}
                   margin="normal"
                   variant="outlined"
+                  required
                 />
                 <TextField
                   id="outlined-confirmPassword"
@@ -216,9 +260,12 @@ class RegistrationForm extends Component
                   className={classes.textField}
                   value={confirmPassword}
                   onChange={this.handleChange('confirmPassword')}
+                  onBlur={this.passwordValidation}
                   margin="normal"
                   variant="outlined"
+                  required
                 />
+                <p style={{color: "red"}}>{this.state.passwordError}</p>
                  
                 <p><Link to = "/signin" >Already have an account?</Link></p>
 
@@ -227,7 +274,7 @@ class RegistrationForm extends Component
                   color="primary" 
                   className={classes.button}
                   fullWidth
-                  onClick={this.handleSubmit}
+                  type="submit"
                 >
                   Register
                 </Button>

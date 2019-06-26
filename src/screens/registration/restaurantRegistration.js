@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { makeStyles  } from '@material-ui/styles';
+import Loading from '../../components/loading';
 import { Grid, Paper, TextField, MenuItem, Button } from '@material-ui/core';
 import { country_list } from '../../assests/static/contriesList';
-import { connect } from 'react-redux';
 import { restaurantRegistration } from '../../redux/actions/authAction';
+import { connect } from 'react-redux';
 import firebase from '../../config/firebase';
 import { Link } from 'react-router-dom';
 
@@ -51,7 +52,27 @@ class UserRegistrationForm extends Component
       confirmPassword: "",
       certificate: "",
       certificateName: "",
-      restaurantNameError: ""
+      restaurantNameError: "",
+      passwordError: "",
+      isLoading: false
+
+    }
+  }
+
+  passwordValidation = () =>{
+
+    const { password, confirmPassword } = this.state;
+    if(password.length < 6)
+    {
+      this.setState({passwordError: "Password must contain 6 character"});
+    }
+    else if(password !== confirmPassword)
+    {
+      this.setState({passwordError: "Password does not match!"});      
+    }
+    else
+    {
+      this.setState({passwordError: ""});      
     }
   }
 
@@ -89,8 +110,17 @@ class UserRegistrationForm extends Component
   handleSubmit = () =>{
     const { fullName, email, restaurantName, certificate, country, city, password, confirmPassword  } = this.state;
 
-    if(password === confirmPassword)
+    if(password.length < 6)
     {
+      this.setState({passwordError: "Password must contain 6 character", isLoading: false});
+    }
+    else if(password !== confirmPassword)
+    {
+      this.setState({passwordError: "Password does not match!", isLoading: false});      
+    }
+    else
+    {
+      this.setState({isLoading: true})
       this.props.restaurantRegistration({ fullName, email, restaurantName: restaurantName.toLowerCase(), certificate, country, city, password });
     }
 
@@ -111,8 +141,17 @@ class UserRegistrationForm extends Component
     const { fullName, email, restaurantName, restaurantNameError, certificateName, country, city, password, confirmPassword  } = this.state;
     return(
       <Grid container className={classes.root}>
+          {
+            this.state.isLoading && <Loading/>
+          }          
           <Paper className={classes.paper}>
-            <form className={classes.container} noValidate autoComplete="off">
+            {/* <p style={{color: "green"}}>{this.state.successMessage}</p> */}
+            <form 
+              className={classes.container} 
+              action="javascript:void(0)"  
+              autoComplete="on"
+              onSubmit={this.handleSubmit}
+            >
              
               <TextField
                 id="outlined-name"
@@ -122,7 +161,8 @@ class UserRegistrationForm extends Component
                 fullWidth
                 onChange={this.handleChange('fullName')}
                 margin="normal"
-                variant="outlined"
+                variant="outlined" 
+                required
               />
                <TextField
                 id="outlined-email"
@@ -133,7 +173,8 @@ class UserRegistrationForm extends Component
                 value={email}
                 onChange={this.handleChange('email')}
                 margin="normal"
-                variant="outlined"
+                variant="outlined" 
+                required
               />
               <TextField
                 id="outlined-restaurant-name"
@@ -145,7 +186,8 @@ class UserRegistrationForm extends Component
                 onChange={this.handleChange('restaurantName')}
                 onBlur={() => this.validateRestaurantEvent()}
                 margin="normal"
-                variant="outlined"
+                variant="outlined" 
+                required
               />
               <p style={{color: "red", fontSize: 12,}}>{restaurantNameError}</p>
               <TextField
@@ -158,7 +200,8 @@ class UserRegistrationForm extends Component
                 value={certificateName}
                 onChange={this.handleFile('certificate')}
                 margin="normal"
-                variant="outlined"
+                variant="outlined" 
+                required
               />
              
                 <TextField
@@ -175,7 +218,8 @@ class UserRegistrationForm extends Component
                     },
                   }}
                   margin="normal"
-                  variant="outlined"
+                  variant="outlined" 
+                  required
                 >
                   {Object.keys(country_list).map(value => (
                     <MenuItem key={value} value={value}>
@@ -198,7 +242,8 @@ class UserRegistrationForm extends Component
                     },
                   }}
                   margin="normal"
-                  variant="outlined"
+                  variant="outlined" 
+                  required
                 >
                   { country && country_list[country].map(value => (
                     <MenuItem key={value} value={value}>
@@ -216,7 +261,8 @@ class UserRegistrationForm extends Component
                   value={password}
                   onChange={this.handleChange('password')}
                   margin="normal"
-                  variant="outlined"
+                  variant="outlined" 
+                  required
                 />
                 <TextField
                   id="outlined-confirmPassword"
@@ -226,10 +272,12 @@ class UserRegistrationForm extends Component
                   className={classes.textField}
                   value={confirmPassword}
                   onChange={this.handleChange('confirmPassword')}
+                  onBlur={this.passwordValidation}
                   margin="normal"
-                  variant="outlined"
+                  variant="outlined" 
+                  required
                 />
-                 
+                <p style={{color: "red"}}>{this.props.passwordError}</p>
                 <p><Link to = "/signin" >Already have an account?</Link></p>
 
                 <Button 
@@ -237,7 +285,7 @@ class UserRegistrationForm extends Component
                   color="primary" 
                   className={classes.button}
                   fullWidth
-                  onClick={this.handleSubmit}
+                  type="submit"
                 >
                   Register
                 </Button>

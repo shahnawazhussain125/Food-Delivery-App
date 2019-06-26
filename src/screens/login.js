@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { makeStyles  } from '@material-ui/styles';
-import { Grid, Paper, TextField, Button } from '@material-ui/core';
+import { Grid, Paper, TextField, Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux'
 import { signIn } from '../redux/actions/authAction';
+import Loading from '../components/loading';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme =>({
@@ -38,7 +39,8 @@ class LoginForm extends Component
     this.state = {
       email: "",
       password: "",
-      errorMessage: ""
+      errorMessage: "",
+      isLoading: false
     }
   }
 
@@ -54,19 +56,20 @@ class LoginForm extends Component
   componentWillReceiveProps(nextProps){
     if(!nextProps.signInError)
     {
+      this.setState({errorMessage: nextProps.signInError, isLoading: false})
       this.props.history.push(`/${nextProps.userData.userType}`);
     }
     else
     {
-      this.setState({errorMessage: nextProps.signInError})
+      this.setState({errorMessage: nextProps.signInError, isLoading: false})
     }
   }
 
   handleSubmit = () =>{
     const { email, password} = this.state;
+    this.setState({isLoading: true})
     this.props.signIn({email, password});
   }
-
 
   handleChange = name => event =>{
     this.setState({[name]: event.target.value});
@@ -75,12 +78,15 @@ class LoginForm extends Component
   render(){
     
     const { classes }  = this.props;
-    const { email, password, errorMessage } = this.state;
+    const { email, password, errorMessage, isLoading } = this.state;
     return(
       <Grid container className={classes.root}>
-          <Paper className={classes.paper}>
+        {
+          isLoading && <Loading/>
+        }
+        <Paper className={classes.paper}>
             <p style={{color: "red"}}>{errorMessage}</p>
-            <form className={classes.container} noValidate autoComplete="on">
+            <form className={classes.container} onSubmit={this.handleSubmit} action="javascript:void(0)" autoComplete="on">
                <TextField
                 id="outlined-name"
                 label="Email"
@@ -91,6 +97,7 @@ class LoginForm extends Component
                 onChange={this.handleChange('email')}
                 margin="normal"
                 variant="outlined"
+                required
               />
               
             <TextField
@@ -103,6 +110,7 @@ class LoginForm extends Component
                 onChange={this.handleChange('password')}
                 margin="normal"
                 variant="outlined"
+                required
             />
 
             <p>Not a member yet? <Link to="/registration"> Sign Up here</Link> </p>
@@ -112,7 +120,7 @@ class LoginForm extends Component
               color="primary" 
               className={classes.button}
               fullWidth
-              onClick={this.handleSubmit}
+              type="submit"
             >
                 Login
             </Button>
