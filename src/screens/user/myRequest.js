@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NavTabs(props) {
+export default function MyRequest(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -59,27 +59,36 @@ export default function NavTabs(props) {
         value === 0 
         && 
         <TabContainer>
-            <StatusItems classes={props.classes}/>
-            <StatusItems classes={props.classes}/>
-            <StatusItems classes={props.classes}/>
+          {
+            props.allOrders.filter(value => value.status === "pending")
+            .map((value, index) =>{
+              return <StatusItems classes={props.classes} {...value}/>
+            })
+          }
         </TabContainer>
       }
       {
         value === 1 
         && 
         <TabContainer>
-            <StatusItems classes={props.classes}/>
-            <StatusItems classes={props.classes}/>
-            <StatusItems classes={props.classes}/>
+          {
+            props.allOrders.filter(value => value.status === "inprogress")
+            .map((value, index) =>{
+              return <StatusItems classes={props.classes} {...value}/>
+            })
+          }
         </TabContainer>
       }
       {
         value === 2 
         && 
         <TabContainer>
-            <StatusItems classes={props.classes}/>
-            <StatusItems classes={props.classes}/>
-            <StatusItems classes={props.classes}/>
+          {
+            props.allOrders.filter(value => value.status === "delivered")
+            .map((value, index) =>{
+              return <StatusItems classes={props.classes} {...value}/>
+            })
+          }
         </TabContainer>        
       }
     </div>

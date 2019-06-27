@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import userReducer from './userReducer';
-import adminReducer from './adminReducer';
+import restaurantReducer from './restaurantReducer';
 
 const rootReducer = combineReducers({
     authReducer,
     userReducer,
-    adminReducer
+    restaurantReducer
 });
 
 export default rootReducer;

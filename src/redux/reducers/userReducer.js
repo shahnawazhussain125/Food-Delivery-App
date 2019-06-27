@@ -30,15 +30,17 @@ const userReducer = (state = initalState, action) =>{
                 ...state,
                 itemsOrderError: action.itemsOrderError,
             })
-        case "FEEDBACK_SUCCESS":
+        case "GET_ALL_ORDERS_SUCCESS":
             return({
                 ...state,
-                feedbackError: action.feedbackError,
+                allOrders: action.allOrders,
+                getallOrdersError: action.getallOrdersError,
             })
-        case "FEEDBACK_ERROR":
+        case "GET_ALL_ORDERS_SUCCESS":
             return({
                 ...state,
-                feedbackError: action.feedbackError,
+                allOrders: [],
+                getallOrdersError: action.getallOrdersError,
             })
         
         default:

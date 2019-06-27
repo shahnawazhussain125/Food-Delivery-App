@@ -9,7 +9,7 @@ export const searchRestaurantByText = (searchText) =>{
             restaurants = [];
             snapShot.forEach(doc =>{
 
-                if((doc.data().name).toLowerCase().indexOf(searchText) != -1)
+                if((doc.data().name).toLowerCase().indexOf(searchText) !== -1)
                 {
                     console.log(doc.data())
                     restaurants.push(doc.data());
@@ -30,7 +30,7 @@ export const searchRestaurantByType = (searchText) =>{
             restaurants = [];
             snapShot.forEach(doc =>{
 
-                if((doc.data().type).toLowerCase().indexOf(searchText) != -1)
+                if((doc.data().type).toLowerCase().indexOf(searchText) !== -1)
                 {
                     console.log(doc.data())
                     restaurants.push({...doc.data(), id: doc.id});
@@ -53,6 +53,7 @@ export const itemsOrder = (data) =>{
             imageURL: data.imageURL,
             itemName: data.name,
             restaurantName: data.restaurantName,
+            restaurantName: data.restaurantName,
             status: 'pending',
         })
         .then(()=>{
@@ -62,5 +63,23 @@ export const itemsOrder = (data) =>{
         .catch((error) =>{
             dispatch({ type: "ITEMS_ORDER_ERROR", itemsOrderError: error.message})
         })
+    }
+}
+
+
+export const getAllOrders = () =>{
+    let allOrders = []
+    return(dispatch) =>{
+        firebase.firestore().collection('orders')
+        .onSnapshot((snapShot) =>{
+            allOrders = [];
+            snapShot.forEach(doc =>{
+                allOrders.push({...doc.data(), id: doc.id})
+            })
+            dispatch({ type: "GET_ALL_ORDERS_SUCCESS", allOrders, getallOrdersError: null });
+        }, (error =>{
+            dispatch({ type: "GET_ALL_ORDERS_ERROR", getallOrdersError: error.message})
+        })
+        )
     }
 }

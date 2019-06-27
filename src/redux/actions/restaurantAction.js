@@ -1,51 +1,18 @@
 import firebase from '../../config/firebase';
-export const getAllUsers = () =>{
-    let allUsers = []
-    return(dispatch) =>{
-        firebase.firestore().collection('users')
-        .onSnapshot((snapShot) =>{
-            allUsers = [];
-            snapShot.forEach(doc =>{
-                allUsers.push(doc.data())
-            })
-            dispatch({ type: "GET_ALL_USERS_SUCCESS", allUsers, getAllUsersError: null });
-        }, (error =>{
-            dispatch({ type: "GET_ALL_USERS_ERROR", getAllUsersError: error})
-        })
-        )
-    }
-}
 
-export const getAllBookings = () =>{
-    let allBookings = []
-    return(dispatch) =>{
-        firebase.firestore().collection('bookings')
-        .onSnapshot((snapShot) =>{
-            allBookings = []
-            snapShot.forEach(doc =>{
-                allBookings.push(doc.data())
-            })
-            dispatch({ type: "GET_ALL_BOOKINGS_SUCCESS", allBookings, getAllBookingsError: null });
-        }, (error =>{
-            dispatch({ type: "GET_ALL_BOOKINGS_ERROR", getAllBookingsError: error})
-        })
-        )
-    }
-}
 
-export const getAllFeedbacks = () =>{
-    
-    let allFeedbacks = [];
+export const getAllOrders = () =>{
+    let allOrders = []
     return(dispatch) =>{
-        firebase.firestore().collection('feedbacks')
+        firebase.firestore().collection('orders')
         .onSnapshot((snapShot) =>{
-            allFeedbacks = [];
+            allOrders = [];
             snapShot.forEach(doc =>{
-                allFeedbacks.push(doc.data())
+                allOrders.push({...doc.data(), id: doc.id})
             })
-            dispatch({ type: "GET_ALL_FEEDBACKS_SUCCESS", allFeedbacks, getAllFeedbacksError: null });
+            dispatch({ type: "GET_ALL_ORDERS_SUCCESS", allOrders, getallOrdersError: null });
         }, (error =>{
-            dispatch({ type: "GET_ALL_FEEDBACKS_ERROR", getAllFeedbacksError: error})
+            dispatch({ type: "GET_ALL_ORDERS_ERROR", getallOrdersError: error.message})
         })
         )
     }

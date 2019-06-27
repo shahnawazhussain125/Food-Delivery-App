@@ -11,7 +11,7 @@ import GoogleMap from './location';
 import ChipsArray from './chips';
 import MyRequest from "./myRequest";
 import { connect } from 'react-redux';
-import { searchRestaurantByText, searchRestaurantByType, itemsOrder } from '../../redux/actions/userAction';
+import { searchRestaurantByText, searchRestaurantByType, itemsOrder, getAllOrders } from '../../redux/actions/userAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,19 +58,31 @@ class Dashboard extends Component
             searchText: "",
             restaurants: [],
             noRestaurantFound: "",
+            allOrders: []
         }
 
+    }
+
+    componentDidMount(){
+      if(this.props.user)
+      {
+        this.props.getAllOrders();
+      }
+      else
+      {
+        this.props.history.push('/signin')
+      }
     }
 
     componentWillReceiveProps(nextProps)
     {
       if(nextProps.restaurants.length)
       {
-        this.setState({restaurants: nextProps.restaurants, noRestaurantFound: ""})
+        this.setState({restaurants: nextProps.restaurants,allOrders: nextProps.allOrders, noRestaurantFound: ""})
       }
       else
       {
-        this.setState({restaurants: nextProps.restaurants, noRestaurantFound: "No Restaurant found"})
+        this.setState({restaurants: nextProps.restaurants,allOrders: nextProps.allOrders, noRestaurantFound: "No Restaurant found"})
       }
     }
 
@@ -89,7 +101,15 @@ class Dashboard extends Component
     handleOrder = (id) =>{
       const restaurant = this.state.restaurants[id];
       const {user, itemsOrder} = this.props;
-      itemsOrder({...restaurant, userId: user.uid});
+      if(user)
+      {
+        itemsOrder({...restaurant, userId: user.uid});
+      }
+      else
+      {
+        alert("Login First");
+      }
+      
     }
 
     render(){
@@ -170,7 +190,7 @@ const  DashboardContent = (props) => {
         value === 1
         && 
         <TabContainer>
-          <MyRequest classes={classes}/>
+          <MyRequest classes={classes} allOrders={props.allOrders}/>
         </TabContainer>
       }
     </div>
@@ -182,7 +202,8 @@ const mapStateToProps = (state) =>{
   console.log({restaurants: state.userReducer})
     return({
         restaurants: state.userReducer.restaurants,
-        user: state.authReducer.user
+        user: state.authReducer.user,
+        allOrders: state.userReducer.allOrders,
     })
 }
 
@@ -191,6 +212,8 @@ const mapDispatchToProps = (dispatch) =>{
         searchRestaurantByText: (text) => dispatch(searchRestaurantByText(text)), 
         searchRestaurantByType: (type) => dispatch(searchRestaurantByType(type)),
         itemsOrder: (data) => dispatch(itemsOrder(data)),
+        getAllOrders: () => dispatch(getAllOrders()),
+
     })
 }
 
