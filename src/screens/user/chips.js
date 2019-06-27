@@ -17,24 +17,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ChipsArray() {
+export default function ChipsArray(props) {
   const classes = useStyles();
-  const [chipData, setChipData] = React.useState([
+  const [ chipData ] = React.useState([
     { key: 0, label: 'Chinies' },
     { key: 1, label: 'Pakistani' },
     { key: 2, label: 'Contiental' },
     { key: 3, label: 'Pizza' },
     { key: 4, label: 'Burger' },
   ]);
-
-  const handleDelete = chipToDelete => () => {
-    if (chipToDelete.label === 'React') {
-      alert('Why would you want to delete React?! :)');
-      return;
-    }
-
-    setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
-  };
 
   return (
     <Paper className={classes.root}>
@@ -44,7 +35,7 @@ export default function ChipsArray() {
             key={data.key}
             label={data.label}
             className={classes.chip}
-            onClick={() => alert("Chips")}
+            onClick={() => props.handleChip(data.label)}
             color="secondary"
             variant="outlined"
           />

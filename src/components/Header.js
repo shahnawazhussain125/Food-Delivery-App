@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../redux/actions/authAction';
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 function Header(props) {
   const classes = useStyles();
-
+  console.log("props in header", props)
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -40,7 +40,7 @@ function Header(props) {
             Food Delivery App
           </Typography>
             {
-              props.user? <Button color="inherit" onClick = {SwitchToLogIn(props)}>Logout</Button> : <Link to='/signin' className={classes.link}><Button color="inherit">Login</Button></Link>
+              props.user? <Button color="inherit" onClick = {() =>props.signOut()}>Logout</Button> : <Button onClick={() => SwitchToLogIn(props)} color="inherit">Signin</Button> //<Link to='/signin' className={classes.link}><Button color="inherit">Login</Button></Link>
             }
         </Toolbar>
       </AppBar>
@@ -49,7 +49,8 @@ function Header(props) {
 }
 
 const SwitchToLogIn = (props) =>{
-  props.history.push('/signin')
+  return <Redirect to="/signin" />
+  // props.history.push('/signin')
 }
 
 const mapStateToProps = (state) =>{
@@ -64,4 +65,4 @@ const mapDispatchToProps = (dispatch) =>{
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

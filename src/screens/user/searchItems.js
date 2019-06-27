@@ -26,24 +26,24 @@ class SearchItems extends Component
               <Grid container spacing={2}>
                 <Grid item>
                   <Grid className={classes.image}>
-                    <img className={classes.img} alt="complex" src={Pizza} />
+                    <img className={classes.img} alt="complex" src={this.props.imageURL} />
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm container>
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
                       <Typography gutterBottom variant="subtitle1">
-                        BBQ Restaurant
+                        {this.props.restaurantName}
                       </Typography>
                       <Typography variant="body2" gutterBottom>
-                        Sweet & Sticky BBQ Turkey Legs
+                        {this.props.type}
                       </Typography>
                     </Grid>
                    
                   </Grid>
                   <Grid item>
                     <Grid item>
-                        <Typography variant="subtitle1">Rs 200.00</Typography>
+                        <Typography variant="subtitle1">Rs {this.props.price}</Typography>
                     </Grid>
                     <Grid item style={{marginTop: 100}}>
                         <Typography color="primary" variant="body2" style={{ cursor: 'pointer', borderWidth: 1, borderColor: "silver" }}>

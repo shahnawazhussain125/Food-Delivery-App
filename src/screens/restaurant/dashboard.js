@@ -70,12 +70,6 @@ function LinkTab(props) {
   );
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 export default function Restorent(props) {
   const classes = useStyles();
@@ -98,27 +92,27 @@ export default function Restorent(props) {
         value === 0 
         && 
         <TabContainer>
-            <SearchItems classes={props.classes}/>
-            <SearchItems classes={props.classes}/>
-            <SearchItems classes={props.classes}/>
+            <SearchItems classes={classes}/>
+            <SearchItems classes={classes}/>
+            <SearchItems classes={classes}/>
         </TabContainer>
       }
       {
         value === 1 
         && 
         <TabContainer>
-            <SearchItems classes={props.classes}/>
-            <SearchItems classes={props.classes}/>
-            <SearchItems classes={props.classes}/>
+            <SearchItems classes={classes}/>
+            <SearchItems classes={classes}/>
+            <SearchItems classes={classes}/>
         </TabContainer>
       }
       {
         value === 2 
         && 
         <TabContainer>
-            <SearchItems classes={props.classes}/>
-            <SearchItems classes={props.classes}/>
-            <SearchItems classes={props.classes}/>
+            <SearchItems classes={classes}/>
+            <SearchItems classes={classes}/>
+            <SearchItems classes={classes}/>
         </TabContainer>        
       }
     </div>

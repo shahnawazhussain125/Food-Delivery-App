@@ -1,24 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react';
 import { Grid, Paper, TextField, Button } from '@material-ui/core'
-import { connect } from 'react-redux';
 
-class Search extends Component
-{
-    constructor()
-    {
-        super();
-        this.state={
-            searchText: ""
-        }
-    }
-
-    handleChange = name => event =>{
-        this.setState({[name]: event.target.value})
-    }
-
-    render(){
-        const { classes } = this.props;
-        const { searchText } = this.state;
+const Search = (props) =>{
+    const { classes, searchText, handleChange } = props;
         return(
             <Grid className={classes.root}>
                 <Paper className={classes.paper}>
@@ -30,7 +14,7 @@ class Search extends Component
                             fullWidth
                             className={classes.textField}
                             value={searchText}
-                            onChange={this.handleChange('searchText')}
+                            onChange={handleChange('searchText')}
                             margin="normal"
                             variant="outlined"
                         />
@@ -39,6 +23,7 @@ class Search extends Component
                          color="primary" 
                          className={classes.button}
                          fullWidth
+                         onClick={props.handleClick}
                         >
                             Search
                         </Button>
@@ -47,18 +32,7 @@ class Search extends Component
             </Grid>
         )
     }
-}
 
-const mapStateToProps = (state) =>{
-    return({
-        retaurants: state.authReducer.retaurants
-    })
-}
 
-const mapDispatchToProps = (dispatch) =>{
-    return({
-        
-    })
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;

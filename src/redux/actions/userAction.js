@@ -1,38 +1,23 @@
 import firebase from '../../config/firebase';
 
-export const setBooking = ( bookingData ) =>{
-    return(dispatch) =>{
-        firebase.firestore().collection('bookings')
-        .add({
-            startingTime: bookingData.startingTime,
-            endingTime: bookingData.endingTime,
-            date: bookingData.date,
-            userId: bookingData.userId,
-            area: bookingData.area,
-            slot: bookingData.slot
-        })
-        .then(()=>{
-            alert("Successfully submitted");
-            dispatch({type: "BOOKING_SUCCESS", bookingError: null})
-        })
-        .catch((error) =>{
-            dispatch({type: "BOOKING_ERROR", bookingError: error})
-        })
-    }
-}
 
-export const getBooking = () =>{
-    let bookedData = [];
+export const searchRestaurantByText = (searchText) =>{
+    let restaurants = [];
     return(dispatch) =>{
-        firebase.firestore().collection("bookings")
+        firebase.firestore().collection("items").orderBy("rating", 'desc')
         .onSnapshot(snapShot =>{
-            bookedData = [];
+            restaurants = [];
             snapShot.forEach(doc =>{
-                bookedData.push({ ...doc.data(), id: doc.id});
+
+                if((doc.data().name).toLowerCase().indexOf(searchText) != -1)
+                {
+                    console.log(doc.data())
+                    restaurants.push(doc.data());
+                }
             })
-            dispatch({type: "GETBOOKED_DATA_SUCCESS", bookedData })
+            dispatch({type: "SEARCH_RESTAURANT_SUCCESS", restaurants })
         }, (error) =>{
-            dispatch({type: "GETBOOKED_DATA_ERROR", getBookedDataError: error })
+            dispatch({type: "SEARCH_RESTAURANT_ERROR", searchRestaurantsError: error.message })
         })
     }
 }

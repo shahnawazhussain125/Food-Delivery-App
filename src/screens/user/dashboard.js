@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,7 +9,9 @@ import Search from './search';
 import SearchItems from './searchItems';
 import GoogleMap from './location';
 import ChipsArray from './chips';
-import MyRequest from "./myRequest"
+import MyRequest from "./myRequest";
+import { connect } from 'react-redux';
+import { searchRestaurantByText } from '../../redux/actions/userAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,6 +49,50 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+class Dashboard extends Component
+{
+    constructor()
+    {
+        super();
+        this.state={
+            searchText: "",
+            restaurants: []
+        }
+    }
+
+    componentWillReceiveProps(nextProps)
+    {
+      this.setState({restaurants: nextProps.restaurants})
+    }
+
+    handleChange = name => event =>{
+        this.setState({[name]: event.target.value})
+    }
+
+    handleClick = () =>{
+      this.props.searchRestaurantByText(this.state.searchText.toLowerCase())
+    }
+
+    handleChip = (text) =>{
+      this.props.searchRestaurantByText(text.toLowerCase())
+    }
+
+    render(){
+        return(
+            <span>
+              <DashboardContent 
+                handleChange={this.handleChange} 
+                searchText={this.state.searchText}
+                handleClick={this.handleClick}
+                restaurants={this.state.restaurants}
+                handleChip={this.handleChip}
+              />
+            </span>
+        )
+    }
+}
+
+
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -61,7 +107,7 @@ TabContainer.propTypes = {
 
 
 
-export default function SimpleTabs() {
+const  DashboardContent = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -81,11 +127,18 @@ export default function SimpleTabs() {
         && 
         <TabContainer>
             <GoogleMap classes={classes}/>
-            <Search classes={classes}/>
-            <ChipsArray/>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
+            <Search 
+              classes={classes} 
+              handleChange={props.handleChange}
+              searchText={props.searchText}
+              handleClick={props.handleClick}
+            />
+            <ChipsArray handleChip={props.handleChip}/>
+            {
+              props.restaurants.map((value, index) =>{
+                return  <SearchItems key={index} {...value} classes={classes}/>
+              })
+            }
         </TabContainer>}
       {
         value === 1
@@ -97,3 +150,19 @@ export default function SimpleTabs() {
     </div>
   );
 }
+
+
+const mapStateToProps = (state) =>{
+  console.log({restaurants: state.userReducer})
+    return({
+        restaurants: state.userReducer.restaurants
+    })
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return({
+        searchRestaurantByText: (text) => dispatch(searchRestaurantByText(text))
+    })
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )(Dashboard);

@@ -1,24 +1,23 @@
 const initalState = {
-    bookedData: [],
-    myfeedback: [],
-    bookingError: null,
-    getBookedDataError: null,
-    getMyFeedbackError: null
+    restaurants: [],
+    searchRestaurantsError: null,
 
 }
 
 const userReducer = (state = initalState, action) =>{
     switch (action.type)
      {
-        case "BOOKING_SUCCESS":
+        case "SEARCH_RESTAURANT_SUCCESS":
             return({
                 ...state,
-                bookingError: action.bookingError,
+                restaurants: action.restaurants,
+                searchRestaurantsError: action.searchRestaurantsError,
             })
-        case "BOOKING_ERROR":
+        case "SEARCH_RESTAURANT_ERROR":
             return({
                 ...state,
-                bookingError: action.bookingError,
+                restaurants: [],
+                searchRestaurantsError: null,
             })
         case "GETBOOKED_DATA_SUCCESS":
             return({
