@@ -63,7 +63,14 @@ class Dashboard extends Component
 
     componentWillReceiveProps(nextProps)
     {
-      this.setState({restaurants: nextProps.restaurants})
+      if(nextProps.restaurants.length)
+      {
+        this.setState({restaurants: nextProps.restaurants, noRestaurantFound: ""})
+      }
+      else
+      {
+        this.setState({restaurants: nextProps.restaurants, noRestaurantFound: "No Restaurant found"})
+      }
     }
 
     handleChange = name => event =>{
@@ -137,10 +144,10 @@ const  DashboardContent = (props) => {
             />
             <ChipsArray handleChip={props.handleChip}/>
             {
-              props.noRestaurantFound && props.restaurants.length && <h2>{ props.noRestaurantFound }</h2>
+              props.noRestaurantFound && !props.restaurants.length && <h2>{ props.noRestaurantFound }</h2>
             }
             {
-              props.restaurants.map((value, index) =>{
+              props.restaurants.length !== 0 && props.restaurants.map((value, index) =>{
                 return  <SearchItems key={index} {...value} classes={classes}/>
               })
             }
