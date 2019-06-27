@@ -4,7 +4,7 @@ import Registration from './screens/registration/index';
 import UserRegistration from './screens/registration/userRegistration';
 import RestaurantRegistration from './screens/registration/restaurantRegistration';
 import Login from './screens/login';
-// import Restorent from './pages/admin';
+import Restaurant from './screens/restaurant/dashboard';
 import User from './screens/user/dashboard';
 
 const Routes = () =>{
@@ -16,7 +16,7 @@ const Routes = () =>{
                 <Route exact path = "/registration" component = {Registration} />
                 <Route path = "/registration/user" component={UserRegistration}/>
                 <Route path = "/registration/restaurant" component={RestaurantRegistration}/>
-                {/* <Route path = "/admin" component = {Admin} /> */}
+                <Route path = "/restaurant" component = {Restaurant} />
                 <Route path = "/user" component = { User } />
             </Switch>
         </BrowserRouter>

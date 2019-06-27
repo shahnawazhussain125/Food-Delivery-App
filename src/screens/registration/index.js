@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { makeStyles  } from '@material-ui/styles';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -21,59 +22,32 @@ const useStyles = makeStyles(theme =>({
       marginTop: "20px",
       color: 'red',
       backgroundColor: "green !important"
-    },
-    // link: {
-    //     color: "white !important",
-    //     textDecoration: "none"
-    //   },
+    }
   }));
 
 
-function Registration(){
+function Registration(props){
+  if(props.userData)
+  {
+    props.history.push(`/${props.userData.userType}`)
+  }
   const classes = useStyles();
   return(
-      <RegistrationForm classes = {classes}/>
+    <Grid container className={classes.root}>
+      <Paper className={classes.paper}>
+        <h2>Register as</h2>
+        <Button color="secondary"><Link to='/registration/user' className={classes.link}><Button color="inherit">User</Button></Link></Button>
+        <Button color="secondary"><Link to='/registration/restaurant' className={classes.link}><Button color="inherit">Restaurant</Button></Link></Button>
+      </Paper>
+    </Grid>
   )
 }
 
-class RegistrationForm extends Component
-{
-  constructor()
-  {
-    super();
-    this.state = {
-      fullName: "",
-      email: "",
-      gender: "",
-      age: "",
-      country: "",
-      city: "",
-      password: "",
-      confirmPassword: ""
-
-    }
-  }
-
-
-  handleChange = name => event =>{
-    this.setState({[name]: event.target.value});
-  }
-
-  render(){
-
-    const { classes }  = this.props;
-    return(
-      <Grid container className={classes.root}>
-          <Paper className={classes.paper}>
-                <h2>Register as</h2>
-                <Button color="secondary"><Link to='/registration/user' className={classes.link}><Button color="inherit">User</Button></Link></Button>
-                <Button color="secondary"><Link to='/registration/restaurant' className={classes.link}><Button color="inherit">Restaurant</Button></Link></Button>
-          </Paper>
-      </Grid>
-    )
-  }
+const mapStateToProps = (state) =>{
+  return({
+    userData: state.authReducer.userData
+  })
 }
 
 
-
-export default Registration;
+export default connect(mapStateToProps, null)( Registration );
