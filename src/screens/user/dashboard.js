@@ -11,7 +11,7 @@ import GoogleMap from './location';
 import ChipsArray from './chips';
 import MyRequest from "./myRequest";
 import { connect } from 'react-redux';
-import { searchRestaurantByText } from '../../redux/actions/userAction';
+import { searchRestaurantByText, searchRestaurantByType } from '../../redux/actions/userAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,7 +56,8 @@ class Dashboard extends Component
         super();
         this.state={
             searchText: "",
-            restaurants: []
+            restaurants: [],
+            noRestaurantFound: ""
         }
     }
 
@@ -74,7 +75,7 @@ class Dashboard extends Component
     }
 
     handleChip = (text) =>{
-      this.props.searchRestaurantByText(text.toLowerCase())
+      this.props.searchRestaurantByType(text.toLowerCase())
     }
 
     render(){
@@ -86,6 +87,7 @@ class Dashboard extends Component
                 handleClick={this.handleClick}
                 restaurants={this.state.restaurants}
                 handleChip={this.handleChip}
+                {...this.state}
               />
             </span>
         )
@@ -135,6 +137,9 @@ const  DashboardContent = (props) => {
             />
             <ChipsArray handleChip={props.handleChip}/>
             {
+              props.noRestaurantFound && props.restaurants.length && <h2>{ props.noRestaurantFound }</h2>
+            }
+            {
               props.restaurants.map((value, index) =>{
                 return  <SearchItems key={index} {...value} classes={classes}/>
               })
@@ -161,7 +166,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) =>{
     return({
-        searchRestaurantByText: (text) => dispatch(searchRestaurantByText(text))
+        searchRestaurantByText: (text) => dispatch(searchRestaurantByText(text)), 
+        searchRestaurantByType: (type) => dispatch(searchRestaurantByType(type)),
     })
 }
 

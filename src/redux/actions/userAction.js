@@ -22,6 +22,27 @@ export const searchRestaurantByText = (searchText) =>{
     }
 }
 
+export const searchRestaurantByType = (searchText) =>{
+    let restaurants = [];
+    return(dispatch) =>{
+        firebase.firestore().collection("items").orderBy("rating", 'desc')
+        .onSnapshot(snapShot =>{
+            restaurants = [];
+            snapShot.forEach(doc =>{
+
+                if((doc.data().type).toLowerCase().indexOf(searchText) != -1)
+                {
+                    console.log(doc.data())
+                    restaurants.push(doc.data());
+                }
+            })
+            dispatch({type: "SEARCH_RESTAURANT_SUCCESS", restaurants })
+        }, (error) =>{
+            dispatch({type: "SEARCH_RESTAURANT_ERROR", searchRestaurantsError: error.message })
+        })
+    }
+}
+
 export const deleteBooking = (id) =>{
     return(dispatch) =>{
         firebase.firestore().collection('bookings').doc(id)

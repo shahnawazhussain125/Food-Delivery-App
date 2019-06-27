@@ -50,37 +50,34 @@ class MyGoogleMap extends Component
         return(
         <div className={classes.root}>
             <ExpansionPanel >
-            <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1c-content"
-                id="panel1c-header"
-            >
-                <div className={classes.column}>
-                <Typography className={classes.heading}>Select your Location</Typography>
-                </div>
-                <div className={classes.column}></div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.details}>
-                <div className={classes.column}>
-                    {coords && <MyMapComponent
-                        isMarkerShown 
-                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=&v=3.exp&libraries=geometry,drawing,places"        
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        containerElement={<div style={{ height: `400px` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        coords = {coords}
-                        setMarkerOnDragEnd = {this.setMarkerOnDragEnd}
-                        clickHandler={this.clickHandler}
-                    />}
-                </div>
-            </ExpansionPanelDetails>
-            <Divider />
-            <ExpansionPanelActions>
-                <Button size="small">Cancel</Button>
-                <Button size="small" color="primary">
-                 Save
-                </Button>
-            </ExpansionPanelActions>
+                <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1c-content"
+                    id="panel1c-header"
+                >
+                    <div className={classes.column}>
+                    <Typography className={classes.heading}>Select your Location</Typography>
+                    </div>
+                    <div className={classes.column}></div>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails className={classes.details}>
+                    <div className={classes.column}>
+                        {coords && <MyMapComponent
+                            isMarkerShown 
+                            googleMapURL="https://maps.googleapis.com/maps/api/js?key=&v=3.exp&libraries=geometry,drawing,places"        
+                            loadingElement={<div style={{ height: `100%` }} />}
+                            containerElement={<div style={{ height: `400px` }} />}
+                            mapElement={<div style={{ height: `100%` }} />}
+                            coords = {coords}
+                            setMarkerOnDragEnd = {this.setMarkerOnDragEnd}
+                            clickHandler={this.clickHandler}
+                        />}
+                    </div>
+                </ExpansionPanelDetails>
+                <Divider />
+                <ExpansionPanelActions>
+                    <Button size="small">Close</Button>
+                </ExpansionPanelActions>
             </ExpansionPanel>
         </div>)
     }
