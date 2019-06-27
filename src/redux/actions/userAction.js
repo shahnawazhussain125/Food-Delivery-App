@@ -33,7 +33,7 @@ export const searchRestaurantByType = (searchText) =>{
                 if((doc.data().type).toLowerCase().indexOf(searchText) != -1)
                 {
                     console.log(doc.data())
-                    restaurants.push(doc.data());
+                    restaurants.push({...doc.data(), id: doc.id});
                 }
             })
             dispatch({type: "SEARCH_RESTAURANT_SUCCESS", restaurants })
@@ -43,53 +43,24 @@ export const searchRestaurantByType = (searchText) =>{
     }
 }
 
-export const deleteBooking = (id) =>{
+export const itemsOrder = (data) =>{
     return(dispatch) =>{
-        firebase.firestore().collection('bookings').doc(id)
-        .delete()
-        .then(()=>{
-            dispatch({ type: "DELETE_BOOKING_SUCCESS", deleteBookingError: null})
-        })
-        .catch((error) =>{
-            dispatch({ type: "DELETE_BOOKING_ERROR", deleteBookingError: error})
-        })
-    }
-}
-
-export const setFeedback = ( feedbackData ) =>{
-    return(dispatch) =>{
-        firebase.firestore().collection('feedbacks')
-        .add({
-            message: feedbackData.message,
-            username: feedbackData.username,
-            date: feedbackData.date,
-            userId: feedbackData.userId,
+        firebase.firestore().collection('orders').add({
+            itemsId: data.id,
+            price: data.price,
+            restaurantId: data.restaurantId,
+            userId: data.userId,
+            imageURL: data.imageURL,
+            itemName: data.name,
+            restaurantName: data.restaurantName,
+            status: 'pending',
         })
         .then(()=>{
             alert("Successfully submitted");
-            dispatch({type: "FEEDBACK_SUCCESS", feedbackError: null})
+            dispatch({ type: "ITEMS_ORDER_SUCCESS", itemsOrderError: null})
         })
         .catch((error) =>{
-            dispatch({type: "FEEDBACK_ERROR", feedbackError: error})
+            dispatch({ type: "ITEMS_ORDER_ERROR", itemsOrderError: error.message})
         })
     }
 }
-
-export const myFeedback = (userId) =>{
-    return(dispatch) =>{
-        let myfeedback = [];
-        firebase.firestore().collection('feedbacks')
-        .where("userId", "==", userId)
-        .onSnapshot(snapShot =>{
-            myfeedback = [];
-            snapShot.forEach(doc =>{
-                myfeedback.push({ ...doc.data(), id: doc.id});
-            })
-            dispatch({type: "GETFEEDBACK_DATA_SUCCESS", myfeedback, getMyFeedbackError: null})
-        }, (error) =>{
-            dispatch({type: "GETFEEDBACK_DATA_ERROR", getMyFeedbackError: error })
-        })
-
-    }
-}
-

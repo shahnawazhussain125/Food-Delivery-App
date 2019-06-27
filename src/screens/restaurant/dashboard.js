@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import SearchItems from '../user/searchItems';
+import StatusItems from '../user/statusItems';
 
 
 const useStyles = makeStyles(theme => ({
@@ -92,27 +92,27 @@ export default function Restorent(props) {
         value === 0 
         && 
         <TabContainer>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
+            <StatusItems classes={classes}/>
+            <StatusItems classes={classes}/>
+            <StatusItems classes={classes}/>
         </TabContainer>
       }
       {
         value === 1 
         && 
         <TabContainer>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
+            <StatusItems classes={classes}/>
+            <StatusItems classes={classes}/>
+            <StatusItems classes={classes}/>
         </TabContainer>
       }
       {
         value === 2 
         && 
         <TabContainer>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
-            <SearchItems classes={classes}/>
+            <StatusItems classes={classes}/>
+            <StatusItems classes={classes}/>
+            <StatusItems classes={classes}/>
         </TabContainer>        
       }
     </div>

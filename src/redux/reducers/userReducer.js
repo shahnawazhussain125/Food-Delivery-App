@@ -19,18 +19,16 @@ const userReducer = (state = initalState, action) =>{
                 restaurants: [],
                 searchRestaurantsError: null,
             })
-        case "GETBOOKED_DATA_SUCCESS":
+        case "ITEMS_ORDER_SUCCESS":
             return({
                 ...state,
-                bookedData: action.bookedData,
-                getBookedDataError: action.getBookedDataError,
+                itemsOrderError: null,
 
             })
-        case "GETBOOKED_DATA_ERROR":
+        case "ITEMS_ORDER_ERROR":
             return({
                 ...state,
-                bookedData: [],
-                getBookedDataError: action.getBookedDataError,
+                itemsOrderError: action.itemsOrderError,
             })
         case "FEEDBACK_SUCCESS":
             return({
@@ -42,18 +40,7 @@ const userReducer = (state = initalState, action) =>{
                 ...state,
                 feedbackError: action.feedbackError,
             })
-        case "GETFEEDBACK_DATA_SUCCESS":
-            return({
-                ...state,
-                myfeedback: action.myfeedback,
-                getMyFeedbackError: action.getMyFeedbackError,
-            })
-        case "GETFEEDBACK_DATA_ERROR":
-            return({
-                ...state,
-                myfeedback: [],
-                getMyFeedbackError: action.getMyFeedbackError,
-            })
+        
         default:
             return state;
     }

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Paper, Typography, ButtonBase } from '@material-ui/core'
-import Pizza from '../../assests/images/pizza.jpg'
-
+import { Grid, Paper, Typography, Button } from '@material-ui/core';
 
 class SearchItems extends Component
 {
@@ -51,7 +49,9 @@ class SearchItems extends Component
                     </Grid>
                     <Grid item style={{marginTop: 100}}>
                         <Typography color="primary" variant="body2" style={{ cursor: 'pointer', borderWidth: 1, borderColor: "silver" }}>
-                         Order Now
+                         <Button onClick={() => this.props.handleOrder(this.props.index)}>
+                          Order Now
+                         </Button>
                         </Typography>
                     </Grid>
                   </Grid>
