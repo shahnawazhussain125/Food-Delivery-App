@@ -53,7 +53,6 @@ export const itemsOrder = (data) =>{
             imageURL: data.imageURL,
             itemName: data.name,
             restaurantName: data.restaurantName,
-            restaurantName: data.restaurantName,
             status: 'pending',
         })
         .then(()=>{

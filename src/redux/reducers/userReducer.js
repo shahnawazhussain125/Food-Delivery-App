@@ -36,7 +36,7 @@ const userReducer = (state = initalState, action) =>{
                 allOrders: action.allOrders,
                 getallOrdersError: action.getallOrdersError,
             })
-        case "GET_ALL_ORDERS_SUCCESS":
+        case "GET_ALL_ORDERS_ERROR":
             return({
                 ...state,
                 allOrders: [],

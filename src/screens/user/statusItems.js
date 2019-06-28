@@ -57,10 +57,10 @@ class StatusItems extends Component
                   <Grid item style={{marginTop: 100}}>
                       <Typography color="primary" variant="body2" style={{ cursor: 'pointer', borderWidth: 1, borderColor: "silver" }}>
                        {
-                         userData.userType == "restaurant" ? 
-                         status == "pending" ? <Button onClick={() => this.handleChangeStatus("inprogress")}>Approve</Button> : 
-                         status == "inprogress"? <Button onClick={() => this.handleChangeStatus("delivered")}>Deliver</Button> : 
-                         status : status == "delivered" ? <Button>Rate Us</Button> : 
+                         userData.userType === "restaurant" ? 
+                         status === "pending" ? <Button onClick={() => this.handleChangeStatus("inprogress")}>Approve</Button> : 
+                         status === "inprogress"? <Button onClick={() => this.handleChangeStatus("delivered")}>Deliver</Button> : 
+                         status : status === "delivered" ? <Button>Rate Us</Button> : 
                          status
                        }
                       </Typography>

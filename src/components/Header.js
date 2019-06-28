@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../redux/actions/authAction';
 
@@ -41,7 +41,7 @@ function Header(props) {
             Food Delivery App
           </Typography>
             {
-              props.user? <Button color="inherit" onClick = {() =>props.signOut()}>Logout</Button> : pathname == "/signin" || pathname == "/" ? "" : <Button onClick={() => SwitchToLogIn(props)} color="inherit">Signin</Button> //<Link to='/signin' className={classes.link}><Button color="inherit">Login</Button></Link>
+              props.user? <Button color="inherit" onClick = {() =>props.signOut()}>Logout</Button> : pathname === "/signin" || pathname === "/" ? "" : <Button onClick={() => SwitchToLogIn(props)} color="inherit">Signin</Button> //<Link to='/signin' className={classes.link}><Button color="inherit">Login</Button></Link>
             }
         </Toolbar>
       </AppBar>

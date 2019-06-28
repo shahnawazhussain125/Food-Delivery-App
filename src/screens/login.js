@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { makeStyles  } from '@material-ui/styles';
-import { Grid, Paper, TextField, Button, CircularProgress } from '@material-ui/core';
+import { Grid, Paper, TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux'
 import { signIn } from '../redux/actions/authAction';
 import Loading from '../components/loading';

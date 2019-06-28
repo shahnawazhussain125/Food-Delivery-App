@@ -17,7 +17,6 @@ class SearchItems extends Component
 
     render(){
         const { classes } = this.props;
-        const { SearchItemsText } = this.state;
         return(
         <div className={classes.root}>
             <Paper className={classes.paper}>

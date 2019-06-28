@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { makeStyles  } from '@material-ui/styles';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
