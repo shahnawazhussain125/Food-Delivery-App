@@ -120,89 +120,51 @@ class RegistrationForm extends Component
     const { classes }  = this.props;
     const { isLoading, fullName, email, gender, age, country, city, password, confirmPassword , signUpError } = this.state;
     return(
-      <Grid container className={classes.root}>
+      <span>
         <Header/>
-          {
-            isLoading && <Loading/>
-          }
-          <Paper className={classes.paper}>
-            <form 
-              className={classes.container} 
-              action="javascript:void(0)"  
-              onSubmit={this.handleSubmit}
-              autoComplete="on"
-            >
-              <p style={{color: "red"}}>{signUpError}</p>
-              <TextField
-                id="outlined-name"
-                label="Full Name"
-                className={classes.textField}
-                value={fullName}
-                fullWidth
-                onChange={this.handleChange('fullName')}
-                margin="normal"
-                variant="outlined"
-                required
-              />
-               <TextField
-                id="outlined-email"
-                label="Email"
-                type="email"
-                fullWidth
-                className={classes.textField}
-                value={email}
-                onChange={this.handleChange('email')}
-                margin="normal"
-                variant="outlined"
-                required
-              />
-              <TextField
-                id="outlined-gender"
-                select
-                fullWidth
-                label="Gender"
-                className={classes.textField}
-                value={gender}
-                onChange={this.handleChange('gender')}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                }}
-                margin="normal"
-                variant="outlined"
-                required
+        <Grid container className={classes.root}>
+            {
+              isLoading && <Loading/>
+            }
+            <Paper className={classes.paper}>
+              <form 
+                className={classes.container} 
+                action="javascript:void(0)"  
+                onSubmit={this.handleSubmit}
+                autoComplete="on"
               >
-                {["Male", "Female"].map(value => (
-                  <MenuItem key={value} value={value}>
-                    {value}
-                  </MenuItem>
-                ))}
-              </TextField>              
-               <TextField
-                  id="outlined-age"
-                  label="Age"
-                  fullWidth
-                  value={age}
-                  onChange={this.handleChange('age')}
-                  type="number"
+                <p style={{color: "red"}}>{signUpError}</p>
+                <TextField
+                  id="outlined-name"
+                  label="Full Name"
                   className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  value={fullName}
+                  fullWidth
+                  onChange={this.handleChange('fullName')}
                   margin="normal"
                   variant="outlined"
                   required
                 />
-
                 <TextField
-                  id="outlined-country"
+                  id="outlined-email"
+                  label="Email"
+                  type="email"
+                  fullWidth
+                  className={classes.textField}
+                  value={email}
+                  onChange={this.handleChange('email')}
+                  margin="normal"
+                  variant="outlined"
+                  required
+                />
+                <TextField
+                  id="outlined-gender"
                   select
                   fullWidth
-                  label="Country"
+                  label="Gender"
                   className={classes.textField}
-                  value={country}
-                  onChange={this.handleChange('country')}
+                  value={gender}
+                  onChange={this.handleChange('gender')}
                   SelectProps={{
                     MenuProps: {
                       className: classes.menu,
@@ -212,77 +174,117 @@ class RegistrationForm extends Component
                   variant="outlined"
                   required
                 >
-                  {Object.keys(country_list).map(value => (
+                  {["Male", "Female"].map(value => (
                     <MenuItem key={value} value={value}>
                       {value}
                     </MenuItem>
                   ))}
-                </TextField> 
-
+                </TextField>              
                 <TextField
-                  id="outlined-city"
-                  select
-                  fullWidth
-                  label="City"
-                  className={classes.textField}
-                  value={city}
-                  onChange={this.handleChange('city')}
-                  SelectProps={{
-                    MenuProps: {
-                      className: classes.menu,
-                    },
-                  }}
-                  margin="normal"
-                  variant="outlined"
-                >
-                  { country && country_list[country].map(value => (
-                    <MenuItem key={value} value={value}>
-                      {value}
-                    </MenuItem>
-                  ))}
-                </TextField> 
+                    id="outlined-age"
+                    label="Age"
+                    fullWidth
+                    value={age}
+                    onChange={this.handleChange('age')}
+                    type="number"
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    margin="normal"
+                    variant="outlined"
+                    required
+                  />
 
-                <TextField
-                  id="outlined-password"
-                  label="Password"
-                  fullWidth
-                  type="password"
-                  className={classes.textField}
-                  value={password}
-                  onChange={this.handleChange('password')}
-                  margin="normal"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  id="outlined-confirmPassword"
-                  label="Confirm Password"
-                  fullWidth
-                  type="password"
-                  className={classes.textField}
-                  value={confirmPassword}
-                  onChange={this.handleChange('confirmPassword')}
-                  onBlur={this.passwordValidation}
-                  margin="normal"
-                  variant="outlined"
-                  required
-                />
-                <p style={{color: "red"}}>{this.state.passwordError}</p>
-                 
-                <p><Link to = "/signin" >Already have an account?</Link></p>
+                  <TextField
+                    id="outlined-country"
+                    select
+                    fullWidth
+                    label="Country"
+                    className={classes.textField}
+                    value={country}
+                    onChange={this.handleChange('country')}
+                    SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
+                    }}
+                    margin="normal"
+                    variant="outlined"
+                    required
+                  >
+                    {Object.keys(country_list).map(value => (
+                      <MenuItem key={value} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </TextField> 
 
-                <Button 
-                  variant="contained"  
-                  color="primary" 
-                  className={classes.button}
-                  fullWidth
-                  type="submit"
-                >
-                  Register
-                </Button>
-            </form>
-          </Paper>
-      </Grid>
+                  <TextField
+                    id="outlined-city"
+                    select
+                    fullWidth
+                    label="City"
+                    className={classes.textField}
+                    value={city}
+                    onChange={this.handleChange('city')}
+                    SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
+                    }}
+                    margin="normal"
+                    variant="outlined"
+                  >
+                    { country && country_list[country].map(value => (
+                      <MenuItem key={value} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </TextField> 
+
+                  <TextField
+                    id="outlined-password"
+                    label="Password"
+                    fullWidth
+                    type="password"
+                    className={classes.textField}
+                    value={password}
+                    onChange={this.handleChange('password')}
+                    margin="normal"
+                    variant="outlined"
+                    required
+                  />
+                  <TextField
+                    id="outlined-confirmPassword"
+                    label="Confirm Password"
+                    fullWidth
+                    type="password"
+                    className={classes.textField}
+                    value={confirmPassword}
+                    onChange={this.handleChange('confirmPassword')}
+                    onBlur={this.passwordValidation}
+                    margin="normal"
+                    variant="outlined"
+                    required
+                  />
+                  <p style={{color: "red"}}>{this.state.passwordError}</p>
+                  
+                  <p><Link to = "/signin" >Already have an account?</Link></p>
+
+                  <Button 
+                    variant="contained"  
+                    color="primary" 
+                    className={classes.button}
+                    fullWidth
+                    type="submit"
+                  >
+                    Register
+                  </Button>
+              </form>
+            </Paper>
+        </Grid>
+      </span>
     )
   }
 }

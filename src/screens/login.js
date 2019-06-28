@@ -81,54 +81,56 @@ class LoginForm extends Component
     const { classes }  = this.props;
     const { email, password, errorMessage, isLoading } = this.state;
     return(
-      <Grid container className={classes.root}>
+      <span>
         <Header/>
-        {
-          isLoading && <Loading/>
-        }
-        <Paper className={classes.paper}>
-            <p style={{color: "red"}}>{errorMessage}</p>
-            <form className={classes.container} onSubmit={this.handleSubmit} action="javascript:void(0)" autoComplete="on">
-               <TextField
-                id="outlined-name"
-                label="Email"
-                type="email"
-                fullWidth
-                className={classes.textField}
-                value={email}
-                onChange={this.handleChange('email')}
-                margin="normal"
-                variant="outlined"
-                required
+        <Grid container className={classes.root}>
+          {
+            isLoading && <Loading/>
+          }
+          <Paper className={classes.paper}>
+              <p style={{color: "red"}}>{errorMessage}</p>
+              <form className={classes.container} onSubmit={this.handleSubmit} action="javascript:void(0)" autoComplete="on">
+                <TextField
+                  id="outlined-name"
+                  label="Email"
+                  type="email"
+                  fullWidth
+                  className={classes.textField}
+                  value={email}
+                  onChange={this.handleChange('email')}
+                  margin="normal"
+                  variant="outlined"
+                  required
+                />
+                
+              <TextField
+                  id="outlined-password"
+                  label="Password"
+                  fullWidth
+                  type="password"
+                  className={classes.textField}
+                  value={password}
+                  onChange={this.handleChange('password')}
+                  margin="normal"
+                  variant="outlined"
+                  required
               />
-              
-            <TextField
-                id="outlined-password"
-                label="Password"
+
+              <p>Not a member yet? <Link to="/registration"> Sign Up here</Link> </p>
+
+              <Button 
+                variant="contained"  
+                color="primary" 
+                className={classes.button}
                 fullWidth
-                type="password"
-                className={classes.textField}
-                value={password}
-                onChange={this.handleChange('password')}
-                margin="normal"
-                variant="outlined"
-                required
-            />
-
-            <p>Not a member yet? <Link to="/registration"> Sign Up here</Link> </p>
-
-            <Button 
-              variant="contained"  
-              color="primary" 
-              className={classes.button}
-              fullWidth
-              type="submit"
-            >
-                Login
-            </Button>
-            </form>
-          </Paper>
-      </Grid>
+                type="submit"
+              >
+                  Login
+              </Button>
+              </form>
+            </Paper>
+        </Grid>
+      </span>
     )
   }
 }

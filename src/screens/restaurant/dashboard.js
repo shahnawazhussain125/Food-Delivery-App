@@ -126,52 +126,54 @@ function DashboardContent(props) {
   }
   console.log("")
   return (
-    <div className={classes.root}>
-      <Header />
-      <AppBar color="default" position="static">
-        <Tabs variant="fullWidth" value={value} onChange={handleChange}>
-          <LinkTab label="Pinding" href="/drafts" />
-          <LinkTab label="In Progress" href="/trash" />
-          <LinkTab label="Delivered" href="/spam" />
-        </Tabs>
-      </AppBar>
-      {
-        value === 0 
-        && 
-        <TabContainer>
-          {
-            allOrders.filter(value => value.status === "pending")
-            .map((value, index) =>{
-              return <StatusItems key = { index } classes = { classes } userData = { userData } { ...value } />
-            })
-          }
-        </TabContainer>
-      }
-      {
-        value === 1 
-        && 
-        <TabContainer>
-          {
-            allOrders.filter(value => value.status === "inprogress")
-            .map((value, index) =>{
-              return <StatusItems key = { index } classes={classes} userData={userData} {...value} />
-            })
-          }
-        </TabContainer>
-      }
-      {
-        value === 2 
-        && 
-        <TabContainer>
-          {
-           userData && allOrders.filter(value => value.status === "delivered")
-            .map((value, index) =>{
-              return <StatusItems key = { index } classes = { classes } userData={userData} {...value} />
-            })
-          }
-        </TabContainer>        
-      }
-    </div>
+    <span>
+       <Header />
+      <div className={classes.root}>
+        <AppBar color="default" position="static">
+          <Tabs variant="fullWidth" value={value} onChange={handleChange}>
+            <LinkTab label="Pinding" href="/drafts" />
+            <LinkTab label="In Progress" href="/trash" />
+            <LinkTab label="Delivered" href="/spam" />
+          </Tabs>
+        </AppBar>
+        {
+          value === 0 
+          && 
+          <TabContainer>
+            {
+              allOrders.filter(value => value.status === "pending")
+              .map((value, index) =>{
+                return <StatusItems key = { index } classes = { classes } userData = { userData } { ...value } />
+              })
+            }
+          </TabContainer>
+        }
+        {
+          value === 1 
+          && 
+          <TabContainer>
+            {
+              allOrders.filter(value => value.status === "inprogress")
+              .map((value, index) =>{
+                return <StatusItems key = { index } classes={classes} userData={userData} {...value} />
+              })
+            }
+          </TabContainer>
+        }
+        {
+          value === 2 
+          && 
+          <TabContainer>
+            {
+            userData && allOrders.filter(value => value.status === "delivered")
+              .map((value, index) =>{
+                return <StatusItems key = { index } classes = { classes } userData={userData} {...value} />
+              })
+            }
+          </TabContainer>        
+        }
+      </div>
+    </span>
   );
 }
 

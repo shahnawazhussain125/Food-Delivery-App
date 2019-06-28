@@ -34,14 +34,17 @@ function Registration(props){
   }
   const classes = useStyles();
   return(
-    <Grid container className={classes.root}>
+    <span>
       <Header/>
-      <Paper className={classes.paper}>
-        <h2>Register as</h2>
-        <Button color="secondary"><Link to='/registration/user' className={classes.link}><Button color="inherit">User</Button></Link></Button>
-        <Button color="secondary"><Link to='/registration/restaurant' className={classes.link}><Button color="inherit">Restaurant</Button></Link></Button>
-      </Paper>
-    </Grid>
+      <Grid container className={classes.root}>
+        
+        <Paper className={classes.paper}>
+          <h2>Register as</h2>
+          <Button color="secondary"><Link to='/registration/user' className={classes.link}><Button color="inherit">User</Button></Link></Button>
+          <Button color="secondary"><Link to='/registration/restaurant' className={classes.link}><Button color="inherit">Restaurant</Button></Link></Button>
+        </Paper>
+      </Grid>
+    </span>
   )
 }
 
