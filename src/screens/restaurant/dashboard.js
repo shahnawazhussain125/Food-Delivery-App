@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import StatusItems from '../user/statusItems';
 import { getAllOrders } from '../../redux/actions/restaurantAction';
 import { connect } from 'react-redux';
+import Header from '../../components/Header';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -64,6 +65,11 @@ class Dashboard extends Component
       {
         this.props.getAllOrders(this.props.user.uid)
       }
+      else
+      {
+        alert("hellow")
+        this.props.history.push("/");
+      }
     }
 
     componentWillReceiveProps(nextProps)
@@ -118,9 +124,10 @@ function DashboardContent(props) {
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-
+  console.log("")
   return (
     <div className={classes.root}>
+      <Header />
       <AppBar color="default" position="static">
         <Tabs variant="fullWidth" value={value} onChange={handleChange}>
           <LinkTab label="Pinding" href="/drafts" />
@@ -157,7 +164,7 @@ function DashboardContent(props) {
         && 
         <TabContainer>
           {
-            allOrders.filter(value => value.status === "delivered")
+           userData && allOrders.filter(value => value.status === "delivered")
             .map((value, index) =>{
               return <StatusItems key = { index } classes = { classes } userData={userData} {...value} />
             })

@@ -103,6 +103,7 @@ export const signOut = () =>{
     return(dispatch)=>{
         firebase.auth().signOut()
         .then(() =>{
+            window.location.assign('/signin');
             dispatch({type: "SIGNOUT_SUCCESS"})
         })
         .catch((error) =>{
@@ -110,20 +111,4 @@ export const signOut = () =>{
         })
     }
 }
-
-// export const getRestorent = (searchText) =>{
-//     return(dispatch) =>{
-//         firebase.firestore().collection('restorem').where('menu', "==", searchText)
-//         .get()
-//         .then(snapShot =>{
-//             let restaurants = []
-//             snapShot.forEach(doc => {
-//                 restaurants.push(doc.data())
-//             });
-//             dispatch({type: "GET_RESTAURANT_SUCCESS", restaurants})
-//         })
-//         .catch(error =>{
-//             dispatch({type: "GET_RESTAURANT_ERROR", restaurants: [], errorMessage: error.message})
-//         })
-//     }
-// }
+  

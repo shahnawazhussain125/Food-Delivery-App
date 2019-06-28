@@ -1,6 +1,6 @@
 const defaultState = {
-    user: null,
-    userData: null,
+    user: {},
+    userData: {},
     isError: null,
     deleteBookingError: null,
 }

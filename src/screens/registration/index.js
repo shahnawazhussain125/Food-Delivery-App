@@ -3,6 +3,7 @@ import { makeStyles  } from '@material-ui/styles';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Header from '../../components/Header';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -34,6 +35,7 @@ function Registration(props){
   const classes = useStyles();
   return(
     <Grid container className={classes.root}>
+      <Header/>
       <Paper className={classes.paper}>
         <h2>Register as</h2>
         <Button color="secondary"><Link to='/registration/user' className={classes.link}><Button color="inherit">User</Button></Link></Button>

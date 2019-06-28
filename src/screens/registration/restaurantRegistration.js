@@ -7,6 +7,7 @@ import { restaurantRegistration } from '../../redux/actions/authAction';
 import { connect } from 'react-redux';
 import firebase from '../../config/firebase';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -141,6 +142,7 @@ class UserRegistrationForm extends Component
     const { fullName, email, restaurantName, restaurantNameError, certificateName, country, city, password, confirmPassword  } = this.state;
     return(
       <Grid container className={classes.root}>
+        <Header/>
           {
             this.state.isLoading && <Loading/>
           }          

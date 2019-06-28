@@ -59,8 +59,8 @@ class StatusItems extends Component
                        {
                          userData.userType == "restaurant" ? 
                          status == "pending" ? <Button onClick={() => this.handleChangeStatus("inprogress")}>Approve</Button> : 
-                         status == "inprogress"? <Button onClick={() => this.handleChangeStatus("delivered")}>Delivered</Button> : 
-                         status : status == "delivered" ? <Button>Rating</Button> : 
+                         status == "inprogress"? <Button onClick={() => this.handleChangeStatus("delivered")}>Deliver</Button> : 
+                         status : status == "delivered" ? <Button>Rate Us</Button> : 
                          status
                        }
                       </Typography>

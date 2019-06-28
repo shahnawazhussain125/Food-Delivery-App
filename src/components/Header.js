@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 function Header(props) {
   const classes = useStyles();
+  const pathname = props.history.location.pathname;
   console.log("props in header", props)
   return (
     <div className={classes.root}>
@@ -40,7 +41,7 @@ function Header(props) {
             Food Delivery App
           </Typography>
             {
-              props.user? <Button color="inherit" onClick = {() =>props.signOut()}>Logout</Button> : <Button onClick={() => SwitchToLogIn(props)} color="inherit">Signin</Button> //<Link to='/signin' className={classes.link}><Button color="inherit">Login</Button></Link>
+              props.user? <Button color="inherit" onClick = {() =>props.signOut()}>Logout</Button> : pathname == "/signin" || pathname == "/" ? "" : <Button onClick={() => SwitchToLogIn(props)} color="inherit">Signin</Button> //<Link to='/signin' className={classes.link}><Button color="inherit">Login</Button></Link>
             }
         </Toolbar>
       </AppBar>
@@ -49,8 +50,7 @@ function Header(props) {
 }
 
 const SwitchToLogIn = (props) =>{
-  return <Redirect to="/signin" />
-  // props.history.push('/signin')
+  props.history.push('/signin')
 }
 
 const mapStateToProps = (state) =>{

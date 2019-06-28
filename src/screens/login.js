@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { signIn } from '../redux/actions/authAction';
 import Loading from '../components/loading';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -81,6 +82,7 @@ class LoginForm extends Component
     const { email, password, errorMessage, isLoading } = this.state;
     return(
       <Grid container className={classes.root}>
+        <Header/>
         {
           isLoading && <Loading/>
         }

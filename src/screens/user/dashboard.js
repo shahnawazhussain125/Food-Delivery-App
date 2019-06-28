@@ -12,6 +12,7 @@ import ChipsArray from './chips';
 import MyRequest from "./myRequest";
 import { connect } from 'react-redux';
 import { searchRestaurantByText, searchRestaurantByType, itemsOrder, getAllOrders } from '../../redux/actions/userAction';
+import Header from '../../components/Header';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -116,6 +117,7 @@ class Dashboard extends Component
     render(){
         return(
             <span>
+              <Header/>
               <DashboardContent 
                 handleChange={this.handleChange} 
                 searchText={this.state.searchText}

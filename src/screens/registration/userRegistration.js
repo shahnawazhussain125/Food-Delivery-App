@@ -6,6 +6,7 @@ import Loading from '../../components/loading';
 import { userRegistration } from '../../redux/actions/authAction';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -120,6 +121,7 @@ class RegistrationForm extends Component
     const { isLoading, fullName, email, gender, age, country, city, password, confirmPassword , signUpError } = this.state;
     return(
       <Grid container className={classes.root}>
+        <Header/>
           {
             isLoading && <Loading/>
           }
