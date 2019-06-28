@@ -54,7 +54,7 @@ class Dashboard extends Component
         this.state={
             searchText: "",
             restaurants: [],
-            noRestaurantFound: "",
+            noRestaurantFound: "",         
         }
 
     }
@@ -72,8 +72,9 @@ class Dashboard extends Component
         return(
           <span>
             <DashboardContent 
-              allOrders={this.props.allOrders}
+              allOrders = { this.props.allOrders }
               {...this.state}
+              userData = { this.props.userData }
             />
           </span>
       )
@@ -109,7 +110,7 @@ function LinkTab(props) {
 function DashboardContent(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const { allOrders } = props;
+  const { allOrders, userData } = props;
 
   function handleChange(event, newValue) {
     setValue(newValue);
@@ -131,7 +132,7 @@ function DashboardContent(props) {
           {
             allOrders.filter(value => value.status === "pending")
             .map((value, index) =>{
-              return <StatusItems key = { index } classes = { classes } { ...value } />
+              return <StatusItems key = { index } classes = { classes } userData = { userData } { ...value } />
             })
           }
         </TabContainer>
@@ -143,7 +144,7 @@ function DashboardContent(props) {
           {
             allOrders.filter(value => value.status === "inprogress")
             .map((value, index) =>{
-              return <StatusItems key = { index } classes={classes} {...value} />
+              return <StatusItems key = { index } classes={classes} userData={userData} {...value} />
             })
           }
         </TabContainer>
@@ -155,7 +156,7 @@ function DashboardContent(props) {
           {
             allOrders.filter(value => value.status === "delivered")
             .map((value, index) =>{
-              return <StatusItems key = { index } classes = { classes } {...value} />
+              return <StatusItems key = { index } classes = { classes } userData={userData} {...value} />
             })
           }
         </TabContainer>        
@@ -169,7 +170,7 @@ function DashboardContent(props) {
 const mapStateToProps = (state) =>{
   console.log({restaurants: state.userReducer})
     return({
-        user: state.authReducer.user,
+        userData: state.authReducer.userData,
         allOrders: state.restaurantReducer.allOrders,
     })
 }

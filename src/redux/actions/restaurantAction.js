@@ -13,7 +13,6 @@ export const getAllOrders = () =>{
             dispatch({ type: "GET_ALL_ORDERS_SUCCESS", allOrders, getallOrdersError: null });
         }, (error =>{
             dispatch({ type: "GET_ALL_ORDERS_ERROR", getallOrdersError: error.message})
-        })
-        )
+        }))
     }
 }

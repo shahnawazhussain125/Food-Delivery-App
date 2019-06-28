@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { Grid, Paper, Typography, Button } from '@material-ui/core';
 
 class StatusItems extends Component
 {
@@ -16,7 +16,7 @@ class StatusItems extends Component
     }
 
     render(){
-        const { classes } = this.props;
+        const { classes, userData, status } = this.props;
         
         return(
           <div className={classes.root}>
@@ -50,7 +50,7 @@ class StatusItems extends Component
                   <Grid item style={{marginTop: 100}}>
                       <Typography color="primary" variant="body2" style={{ cursor: 'pointer', borderWidth: 1, borderColor: "silver" }}>
                        {
-                         this.props.status
+                         userData.userType == "restaurant" ? status == "pending" ? <Button>Approve</Button> : status : status == "delivered" ? <Button>Rating</Button> : status
                        }
                       </Typography>
                   </Grid>
