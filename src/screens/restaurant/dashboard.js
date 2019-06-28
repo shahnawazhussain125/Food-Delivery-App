@@ -60,7 +60,10 @@ class Dashboard extends Component
     }
 
     componentDidMount(){
-      
+      if(this.props.user)
+      {
+        this.props.getAllOrders(this.props.user.uid)
+      }
     }
 
     componentWillReceiveProps(nextProps)
@@ -172,12 +175,13 @@ const mapStateToProps = (state) =>{
     return({
         userData: state.authReducer.userData,
         allOrders: state.restaurantReducer.allOrders,
+        user: state.authReducer.user
     })
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return({
-        getAllOrders: () => dispatch(getAllOrders()),
+        getAllOrders: (uid) => dispatch(getAllOrders(uid)),
 
     })
 }

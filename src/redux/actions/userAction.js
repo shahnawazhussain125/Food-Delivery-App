@@ -67,13 +67,14 @@ export const itemsOrder = (data) =>{
 }
 
 
-export const getAllOrders = () =>{
+export const getAllOrders = (uid) =>{
     let allOrders = []
     return(dispatch) =>{
-        firebase.firestore().collection('orders')
+        firebase.firestore().collection('orders').where("userId", "==", uid)
         .onSnapshot((snapShot) =>{
             allOrders = [];
             snapShot.forEach(doc =>{
+                console.log("Hellow")
                 allOrders.push({...doc.data(), id: doc.id})
             })
             dispatch({ type: "GET_ALL_ORDERS_SUCCESS", allOrders, getallOrdersError: null });

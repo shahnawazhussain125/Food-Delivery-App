@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { handleOrderStatus } from '../../redux/actions/restaurantAction';
 
 class StatusItems extends Component
 {
@@ -13,6 +15,11 @@ class StatusItems extends Component
 
     handleChange = name => event =>{
         this.setState({[name]: event.target.value})
+    }
+
+    handleChangeStatus = (status) =>{
+      console.log("status...****", this.props.id)
+      this.props.handleOrderStatus({id: this.props.id, status})
     }
 
     render(){
@@ -50,7 +57,11 @@ class StatusItems extends Component
                   <Grid item style={{marginTop: 100}}>
                       <Typography color="primary" variant="body2" style={{ cursor: 'pointer', borderWidth: 1, borderColor: "silver" }}>
                        {
-                         userData.userType == "restaurant" ? status == "pending" ? <Button>Approve</Button> : status : status == "delivered" ? <Button>Rating</Button> : status
+                         userData.userType == "restaurant" ? 
+                         status == "pending" ? <Button onClick={() => this.handleChangeStatus("inprogress")}>Approve</Button> : 
+                         status == "inprogress"? <Button onClick={() => this.handleChangeStatus("delivered")}>Delivered</Button> : 
+                         status : status == "delivered" ? <Button>Rating</Button> : 
+                         status
                        }
                       </Typography>
                   </Grid>
@@ -63,5 +74,17 @@ class StatusItems extends Component
     }
 }
 
-export default StatusItems;
+const mapStateToProps = (state) =>{
+  return({
+
+  })
+}
+
+const mapDispatchToProps = ( dispatch ) =>{
+  return({
+    handleOrderStatus: (data) => dispatch(handleOrderStatus(data))
+  })
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)( StatusItems );
 

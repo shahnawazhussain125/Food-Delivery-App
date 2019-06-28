@@ -41,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 export default function MyRequest(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  console.log("UserDara______+++++++", props.userData)
 
   function handleChange(event, newValue) {
     setValue(newValue);
@@ -62,7 +63,7 @@ export default function MyRequest(props) {
           {
             props.allOrders.filter(value => value.status === "pending")
             .map((value, index) =>{
-              return <StatusItems classes={props.classes} {...value}/>
+              return <StatusItems classes={props.classes} userData={props.userData} {...value}/>
             })
           }
         </TabContainer>
@@ -74,7 +75,7 @@ export default function MyRequest(props) {
           {
             props.allOrders.filter(value => value.status === "inprogress")
             .map((value, index) =>{
-              return <StatusItems classes={props.classes} {...value}/>
+              return <StatusItems classes={props.classes} userData={props.userData} {...value}/>
             })
           }
         </TabContainer>
@@ -86,7 +87,7 @@ export default function MyRequest(props) {
           {
             props.allOrders.filter(value => value.status === "delivered")
             .map((value, index) =>{
-              return <StatusItems classes={props.classes} {...value}/>
+              return <StatusItems classes={props.classes} userData={props.userData} {...value}/>
             })
           }
         </TabContainer>        

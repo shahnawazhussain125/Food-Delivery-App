@@ -1,6 +1,7 @@
 const initialState = {
     allOrders: [],
     getallOrdersError: null,
+    setStatusError: null
 }
 
 const restaurantReducer = (state = initialState, action) =>
@@ -18,7 +19,16 @@ const restaurantReducer = (state = initialState, action) =>
                 allOrders: [],
                 getallOrdersError: action.getallOrdersError,
             })
-        
+        case "SET_STATUS_SUCCESS":
+            return({
+                ...state,
+                setStatusError: null
+            })   
+        case "SET_STATUS_ERROR":
+            return({
+                ...state,
+                setStatusError: action.setStatusError
+            })     
         default:
             return state;
     }

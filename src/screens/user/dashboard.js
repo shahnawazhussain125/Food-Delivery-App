@@ -58,7 +58,8 @@ class Dashboard extends Component
             searchText: "",
             restaurants: [],
             noRestaurantFound: "",
-            allOrders: []
+            allOrders: [],
+            userData: []
         }
 
     }
@@ -66,7 +67,7 @@ class Dashboard extends Component
     componentDidMount(){
       if(this.props.user)
       {
-        this.props.getAllOrders();
+        this.props.getAllOrders(this.props.user.uid);
       }
       else
       {
@@ -78,11 +79,11 @@ class Dashboard extends Component
     {
       if(nextProps.restaurants.length)
       {
-        this.setState({restaurants: nextProps.restaurants,allOrders: nextProps.allOrders, noRestaurantFound: ""})
+        this.setState({restaurants: nextProps.restaurants,allOrders: nextProps.allOrders,userData: nextProps.userData, noRestaurantFound: ""})
       }
       else
       {
-        this.setState({restaurants: nextProps.restaurants,allOrders: nextProps.allOrders, noRestaurantFound: "No Restaurant found"})
+        this.setState({restaurants: nextProps.restaurants,allOrders: nextProps.allOrders, userData: nextProps.userData, noRestaurantFound: "No Restaurant found"})
       }
     }
 
@@ -190,7 +191,7 @@ const  DashboardContent = (props) => {
         value === 1
         && 
         <TabContainer>
-          <MyRequest classes={classes} allOrders={props.allOrders}/>
+          <MyRequest classes={classes} allOrders={props.allOrders} userData = { props.userData }/>
         </TabContainer>
       }
     </div>
@@ -204,6 +205,7 @@ const mapStateToProps = (state) =>{
         restaurants: state.userReducer.restaurants,
         user: state.authReducer.user,
         allOrders: state.userReducer.allOrders,
+        userData: state.authReducer.userData
     })
 }
 
@@ -212,7 +214,7 @@ const mapDispatchToProps = (dispatch) =>{
         searchRestaurantByText: (text) => dispatch(searchRestaurantByText(text)), 
         searchRestaurantByType: (type) => dispatch(searchRestaurantByType(type)),
         itemsOrder: (data) => dispatch(itemsOrder(data)),
-        getAllOrders: () => dispatch(getAllOrders()),
+        getAllOrders: (uid) => dispatch(getAllOrders(uid)),
 
     })
 }
